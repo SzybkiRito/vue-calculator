@@ -3,6 +3,7 @@
     <div class="calculator">
       
       <div class="output" style="color: pink; font-weight: 2px;">
+        <span>{{ result }}</span>
         <span>{{ previousValue }} {{ operatorString }} {{ currentValue || 0}}</span>
       </div>
 
@@ -37,6 +38,7 @@ export default {
   setup() {
     let currentValue = ref("");
     let previousValue = ref("");
+    let result = ref("");
     let operator = null;
     let operatorString = ref("");
     let operatorClicked = false;
@@ -93,11 +95,12 @@ export default {
       }
     }
     function equal() {
+      if(previousValue.value == "") return;
       currentValue.value = `${operator(
         parseFloat(currentValue.value),
         parseFloat(previousValue.value)
       )}`;
-      previousValue.value = null;
+      previousValue.value = "";
       operatorString.value = "";
     }
 
@@ -107,6 +110,7 @@ export default {
       operator,
       operatorString,
       operatorClicked,
+      result,
       // Functions down
       append,
       setPrevious,
